@@ -1,31 +1,16 @@
+import { useRef, useState } from 'react';
 import './App.css';
+import { Game } from './components/Game/Game';
+import { NewPlayer } from './components/NewPlayer/NewPlayer';
 
 function App() {
-	return (
-		<>
-			<h1>Rock - Paper - Scissors</h1>
+	const [socket, setSocket] = useState<WebSocket | null>(null);
+	const idRef = useRef(Date.now());
 
-			<div className="choices">
-				<button>👊</button>
-				<button>✋</button>
-				<button>✌</button>
-			</div>
-
-			<div id="playerDisplay">PLAYER: </div>
-			<div id="computerDisplay">COMPUTER: </div>
-			<div id="resultDisplay"></div>
-
-			<div className="scoreDisplay">
-				Player Score:
-				<span id="playerScoreDisplay">0</span>
-			</div>
-
-			<div className="scoreDisplay">
-				Computer Score:
-				<span id="computerScoreDisplay">0</span>
-			</div>
-		</>
-	);
+	if (!socket) {
+		return <NewPlayer setSocket={setSocket} id={idRef.current} />;
+	}
+	return <Game socket={socket} id={idRef.current} />;
 }
 
 export default App;
