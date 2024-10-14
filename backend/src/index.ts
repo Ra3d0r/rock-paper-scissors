@@ -1,42 +1,41 @@
 import { WebSocket } from 'ws';
 import { Game } from './game';
+import { Users } from './users';
 
 const game = new Game();
 
-const users = {} as Record<string, User>;
+const gamers = new Users();
 
 game.on('oneChoice', (chooser) => {
-	const enemyId = Object.keys(users).filter(
-		(user) => Number(user) !== Number(chooser)
-	)[0];
-	users[enemyId].text = 'Противник сделал ход';
-	users[chooser].text = 'Ожидайте хода противника';
-
+	const users = gamers.choice(chooser);
 	broadcastMessage({
 		type: 'game',
 		users,
 	});
-	users[enemyId].text = '';
-	users[chooser].text = '';
+	gamers.clearText();
 });
+
 game.on('draw', () => {
-	Object.keys(users).forEach((user) => (users[user].text = 'Ничья'));
+	const users = gamers.draw();
 	broadcastMessage({
 		type: 'round',
 		users,
 	});
-	Object.keys(users).forEach((user) => (users[user].text = ''));
+	gamers.clearText();
 });
+
 game.on('winner', (winnerId) => {
-	users[winnerId].score = users[winnerId].score + 1;
-	users[winnerId].text = 'Победа';
+	gamers.win(winnerId);
 });
+
 game.on('loser', (loserId) => {
-	users[loserId].text = 'Проигрыш';
+	gamers.lose(loserId);
 });
+
 game.on('end', () => {
+	const users = gamers.getUsers();
 	broadcastMessage({ type: 'round', users });
-	Object.keys(users).forEach((user) => (users[user].text = ''));
+	gamers.clearText();
 });
 
 interface Message {
@@ -44,13 +43,6 @@ interface Message {
 	message: string;
 	username: string;
 	id: number;
-}
-
-interface User {
-	id: number;
-	username: string;
-	score: number;
-	text?: string;
 }
 
 const wss = new WebSocket.Server(
@@ -64,22 +56,12 @@ wss.on('connection', (ws) => {
 	ws.on('message', (mes) => {
 		const message = JSON.parse(mes.toString()) as Message;
 		if (message.event === 'connection') {
-			if (Object.keys(users).length >= 2) {
-				ws.send(
-					JSON.stringify({
-						type: 'error',
-						reason: 'Уже есть 2 игрока',
-					})
+			gamers
+				.add({ id: message.id, username: message.username })
+				.catch((reason) => ws.send(sendError(reason)))
+				.then((users) =>
+					broadcastMessage({ type: 'connection', users })
 				);
-				return;
-			}
-
-			users[message.id] = {
-				id: message.id,
-				username: message.username,
-				score: 0,
-			};
-			broadcastMessage({ type: 'connection', users });
 			return;
 		}
 
@@ -93,4 +75,8 @@ function broadcastMessage(message: Record<string, any>) {
 	wss.clients.forEach((client) => {
 		client.send(JSON.stringify(message));
 	});
+}
+
+function sendError(reason: string) {
+	return JSON.stringify({ type: 'error', reason });
 }
