@@ -17,6 +17,7 @@ export const useHandleConnection = (socket: WebSocket, id: number) => {
 	useEffect(() => {
 		socket.onmessage = (event) => {
 			const message = JSON.parse(event.data);
+			console.log(message);
 
 			if (message.type === 'error') {
 				setError(message.reason);
