@@ -55,6 +55,7 @@ const wss = new WebSocket.Server(
 wss.on('connection', (ws) => {
 	ws.on('message', (mes) => {
 		const message = JSON.parse(mes.toString()) as Message;
+
 		if (message.event === 'connection') {
 			gamers
 				.add({ id: message.id, username: message.username })
@@ -66,6 +67,11 @@ wss.on('connection', (ws) => {
 		}
 
 		if (message.event === 'game') {
+			const users = gamers.getUsers();
+			if (Object.keys(users).length <= 1) {
+				ws.send(sendError('Нет второго игрока'));
+				return;
+			}
 			game.run(message.id, message.message);
 		}
 	});
