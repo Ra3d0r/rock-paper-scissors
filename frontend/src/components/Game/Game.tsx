@@ -4,7 +4,7 @@ const getEnemy = (users: Users, id: number) =>
 	Object.values(users).filter((user) => user.id !== id)[0];
 
 export const Game = ({ socket, id }: { socket: WebSocket; id: number }) => {
-	const { users, error, message, disable } = useHandleConnection(socket, id);
+	const { users, error, disable, onClick } = useHandleConnection(socket, id);
 
 	if (error) {
 		return <h1>{error}</h1>;
@@ -13,15 +13,6 @@ export const Game = ({ socket, id }: { socket: WebSocket; id: number }) => {
 	if (!users) {
 		return <h1>Нет данных</h1>;
 	}
-
-	const onClick = (message: string) =>
-		socket.send(
-			JSON.stringify({
-				id,
-				message,
-				event: 'game',
-			})
-		);
 
 	return (
 		<>
@@ -45,7 +36,7 @@ export const Game = ({ socket, id }: { socket: WebSocket; id: number }) => {
 			</div>
 			<div id="resultDisplay">
 				{getEnemy(users, id) ? '' : 'Ожидайте второго игрока'}
-				{message ? message : users?.[id]?.text || ''}
+				{users?.[id]?.text || ''}
 			</div>
 
 			<div className="scoreDisplay">

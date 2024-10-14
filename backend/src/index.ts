@@ -77,36 +77,43 @@ wss.on('connection', (ws) => {
 			game[message.id] = message.message;
 			const allChoosen = Object.keys(game).length >= 2;
 			if (!allChoosen) {
-				ws.send(
-					JSON.stringify({
-						type: 'game',
-						text: 'Ожидайте хода противника',
-						disable: true,
-					})
-				);
-				return;
-			}
-			const winner = getWinner(game);
-			if (!winner) {
+				const enemyId = Object.keys(users).filter(
+					(user) => user !== message.id.toString()
+				)[0];
+				users[enemyId].text = 'Противник сделал ход';
+				users[message.id].text = 'Ожидайте хода противника';
 				broadcastMessage({
 					type: 'game',
-					text: 'Ничья',
-					disable: false,
+					users,
 				});
-				game = {};
+				users[enemyId].text = '';
+				users[message.id].text = '';
 				return;
 			}
-			const enemy = getEnemy(game, winner);
+			const winnerId = getWinner(game);
+			const enemyId = getEnemy(game, winnerId);
+			if (!winnerId) {
+				users[enemyId].text = 'Ничья';
+				users[message.id].text = 'Ничья';
+				broadcastMessage({
+					type: 'round',
+					users,
+				});
+				game = {};
+				users[enemyId].text = '';
+				users[message.id].text = '';
+				return;
+			}
 
-			users[winner].score = users[winner].score + 1;
-			users[winner].text = 'Победа';
-			users[enemy].text = 'Проигрыш';
+			users[winnerId].score = users[winnerId].score + 1;
+			users[winnerId].text = 'Победа';
+			users[enemyId].text = 'Проигрыш';
 			game = {};
 
-			broadcastMessage({ type: 'round', users, disable: false });
+			broadcastMessage({ type: 'round', users });
 
-			users[winner].text = '';
-			users[enemy].text = '';
+			users[winnerId].text = '';
+			users[enemyId].text = '';
 		}
 	});
 });
