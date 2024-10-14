@@ -17,7 +17,6 @@ export const useHandleConnection = (socket: WebSocket, id: number) => {
 	useEffect(() => {
 		socket.onmessage = (event) => {
 			const message = JSON.parse(event.data);
-			console.log(message);
 
 			if (message.type === 'error') {
 				setError(message.reason);
@@ -26,6 +25,11 @@ export const useHandleConnection = (socket: WebSocket, id: number) => {
 
 			if (message.type === 'connection') {
 				setUsers(message.users);
+				if (Object.keys(message.users).length <= 1) {
+					setDisable(true);
+					return;
+				}
+				setDisable(false);
 				return;
 			}
 
