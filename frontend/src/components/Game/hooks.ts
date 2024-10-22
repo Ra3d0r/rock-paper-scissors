@@ -43,6 +43,12 @@ export const useHandleConnection = (socket: WebSocket, id: number) => {
 				setDisable(false);
 				return;
 			}
+
+			if (message.type === 'end') {
+				setUsers(message.users);
+				setDisable(true);
+				return;
+			}
 		};
 		socket.onclose = () => {
 			console.log('Socket закрыт');

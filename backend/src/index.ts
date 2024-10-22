@@ -85,7 +85,7 @@ wss.on('connection', (ws) => {
 
 		const users = gamers.setAllText('Противник вышел');
 		broadcastMessage({
-			type: 'game',
+			type: 'end',
 			users,
 		});
 
