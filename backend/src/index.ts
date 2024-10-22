@@ -53,10 +53,13 @@ const wss = new WebSocket.Server(
 );
 
 wss.on('connection', (ws) => {
+	let currentId = 0; 
+
 	ws.on('message', (mes) => {
 		const message = JSON.parse(mes.toString()) as Message;
 
 		if (message.event === 'connection') {
+			currentId = message.id
 			gamers
 				.add({ id: message.id, username: message.username })
 				.catch((reason) => ws.send(sendError(reason)))
@@ -75,6 +78,11 @@ wss.on('connection', (ws) => {
 			game.run(message.id, message.message);
 		}
 	});
+
+	ws.on('close', () => {
+		game.removeGamer(currentId);
+		gamers.removeUser(currentId);
+	})
 });
 
 function broadcastMessage(message: Record<string, any>) {

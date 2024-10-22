@@ -64,4 +64,8 @@ export class Users {
 	getUsers() {
 		return this.users;
 	}
+
+	removeUser(id: string | number) {
+		delete this.users[id];
+	}
 }

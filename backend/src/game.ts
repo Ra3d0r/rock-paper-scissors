@@ -57,4 +57,8 @@ export class Game {
 	on(event: event, cb: (gamerId: string) => void) {
 		this.events[event] = cb;
 	}
+
+	removeGamer(id: string | number) {
+		delete this.gamers[id];
+	}
 }
