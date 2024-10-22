@@ -1,17 +1,18 @@
 import { FormEventHandler, useState } from 'react';
+import { useWebSocketStore } from '../../store/websocket';
+import { useGameStore } from '../../store/game';
+import { useNavigate } from 'react-router-dom';
 
-export const NewPlayer = ({
-	setSocket,
-	id,
-}: {
-	setSocket: React.Dispatch<React.SetStateAction<WebSocket | null>>;
-	id: number;
-}) => {
+export const Home = () => {
 	const [username, setUsername] = useState('');
+	const setWebSocket = useWebSocketStore((state) => state.setWebSocket);
+	const setId = useGameStore((state) => state.setId);
+	const navigate = useNavigate();
 
 	const onSubmit: FormEventHandler<HTMLFormElement> = (e) => {
 		e.preventDefault();
 		const socket = new WebSocket('ws://localhost:5000');
+		const id = Date.now();
 
 		socket.onopen = () => {
 			const message = {
@@ -22,13 +23,16 @@ export const NewPlayer = ({
 			socket.send(JSON.stringify(message));
 		};
 
-		setSocket(socket);
+		setId(id);
+		setWebSocket(socket);
+		navigate('/game');
 	};
 
 	return (
 		<form onSubmit={onSubmit}>
 			<h2>Введите любой ник для подключения к игре и нажмите Enter</h2>
 			<input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
+			<button type="submit">Подключиться</button>
 		</form>
 	);
 };

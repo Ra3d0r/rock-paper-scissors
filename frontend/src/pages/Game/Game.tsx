@@ -3,8 +3,8 @@ import { useHandleConnection, Users } from './hooks';
 const getEnemy = (users: Users, id: number) =>
 	Object.values(users).filter((user) => user.id !== id)[0];
 
-export const Game = ({ socket, id }: { socket: WebSocket; id: number }) => {
-	const { users, error, disable, onClick } = useHandleConnection(socket, id);
+export const Game = () => {
+	const { users, error, disable, onClick, id } = useHandleConnection();
 
 	if (error) {
 		return <h1>{error}</h1>;
@@ -30,7 +30,7 @@ export const Game = ({ socket, id }: { socket: WebSocket; id: number }) => {
 				</button>
 			</div>
 
-			<div id="playerDisplay">Ваш ник: {users?.[id].username} </div>
+			<div id="playerDisplay">Ваш ник: {users?.[id]?.username} </div>
 			<div id="enemyDisplay">Противник: {getEnemy(users, id)?.username || ''} </div>
 			<div id="resultDisplay">
 				<p>{getEnemy(users, id) ? '' : 'Ожидайте второго игрока'}</p>

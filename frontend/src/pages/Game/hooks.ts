@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { useGameStore } from '../../store/game';
+import { useWebSocketStore } from '../../store/websocket';
 
 export interface User {
 	id: number;
@@ -9,12 +11,19 @@ export interface User {
 
 export type Users = Record<string, User>;
 
-export const useHandleConnection = (socket: WebSocket, id: number) => {
-	const [users, setUsers] = useState<Users>();
+export const useHandleConnection = () => {
+	const id = useGameStore((state) => state.id);
+	const users = useGameStore((state) => state.users);
+	const setUsers = useGameStore((state) => state.setUsers);
+	const socket = useWebSocketStore((state) => state.webSocket);
+
 	const [error, setError] = useState<string | null>(null);
 	const [disable, setDisable] = useState(false);
 
 	useEffect(() => {
+		if (!socket) {
+			return;
+		}
 		socket.onmessage = (event) => {
 			const message = JSON.parse(event.data);
 
@@ -61,7 +70,7 @@ export const useHandleConnection = (socket: WebSocket, id: number) => {
 	}, []);
 
 	const onClick = (message: string) => {
-		socket.send(
+		socket?.send(
 			JSON.stringify({
 				id,
 				message,
@@ -71,5 +80,5 @@ export const useHandleConnection = (socket: WebSocket, id: number) => {
 		setDisable(true);
 	};
 
-	return { users, error, disable, onClick };
+	return { users, error, disable, onClick, id };
 };
