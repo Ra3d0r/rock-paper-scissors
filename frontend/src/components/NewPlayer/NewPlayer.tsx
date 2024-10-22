@@ -28,11 +28,7 @@ export const NewPlayer = ({
 	return (
 		<form onSubmit={onSubmit}>
 			<h2>Введите любой ник для подключения к игре и нажмите Enter</h2>
-			<input
-				type="text"
-				value={username}
-				onChange={(e) => setUsername(e.target.value)}
-			/>
+			<input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
 		</form>
 	);
 };

@@ -14,13 +14,7 @@ export class Users {
 		Object.keys(this.users).forEach((user) => (this.users[user].text = ''));
 	}
 
-	add({
-		id,
-		username,
-	}: {
-		id: number;
-		username: string;
-	}): Promise<UsersType> {
+	add({ id, username }: { id: number; username: string }): Promise<UsersType> {
 		return new Promise((resolve, reject) => {
 			if (Object.keys(this.users).length >= 2) {
 				reject('Уже есть 2 игрока');
@@ -37,18 +31,14 @@ export class Users {
 	}
 
 	choice(chooserId: string) {
-		const enemyId = Object.keys(this.users).filter(
-			(user) => Number(user) !== Number(chooserId)
-		)[0];
+		const enemyId = Object.keys(this.users).filter((user) => Number(user) !== Number(chooserId))[0];
 		this.users[enemyId].text = 'Противник сделал ход';
 		this.users[chooserId].text = 'Ожидайте хода противника';
 		return this.users;
 	}
 
 	draw() {
-		Object.keys(this.users).forEach(
-			(user) => (this.users[user].text = 'Ничья')
-		);
+		Object.keys(this.users).forEach((user) => (this.users[user].text = 'Ничья'));
 		return this.users;
 	}
 

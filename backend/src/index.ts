@@ -49,23 +49,21 @@ const wss = new WebSocket.Server(
 	{
 		port: 5000,
 	},
-	() => console.log(`Server started on 5000`)
+	() => console.log(`Server started on 5000`),
 );
 
 wss.on('connection', (ws) => {
-	let currentId = 0; 
+	let currentId = 0;
 
 	ws.on('message', (mes) => {
 		const message = JSON.parse(mes.toString()) as Message;
 
 		if (message.event === 'connection') {
-			currentId = message.id
+			currentId = message.id;
 			gamers
 				.add({ id: message.id, username: message.username })
 				.catch((reason) => ws.send(sendError(reason)))
-				.then((users) =>
-					broadcastMessage({ type: 'connection', users })
-				);
+				.then((users) => broadcastMessage({ type: 'connection', users }));
 			return;
 		}
 
@@ -82,7 +80,7 @@ wss.on('connection', (ws) => {
 	ws.on('close', () => {
 		game.removeGamer(currentId);
 		gamers.removeUser(currentId);
-	})
+	});
 });
 
 function broadcastMessage(message: Record<string, any>) {

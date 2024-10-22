@@ -60,7 +60,7 @@ export const useHandleConnection = (socket: WebSocket, id: number) => {
 				id,
 				message,
 				event: 'game',
-			})
+			}),
 		);
 		setDisable(true);
 	};

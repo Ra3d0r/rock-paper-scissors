@@ -31,9 +31,7 @@ export const Game = ({ socket, id }: { socket: WebSocket; id: number }) => {
 			</div>
 
 			<div id="playerDisplay">Ваш ник: {users?.[id].username} </div>
-			<div id="enemyDisplay">
-				Противник: {getEnemy(users, id)?.username || ''}{' '}
-			</div>
+			<div id="enemyDisplay">Противник: {getEnemy(users, id)?.username || ''} </div>
 			<div id="resultDisplay">
 				{getEnemy(users, id) ? '' : 'Ожидайте второго игрока'}
 				{users?.[id]?.text || ''}
@@ -46,9 +44,7 @@ export const Game = ({ socket, id }: { socket: WebSocket; id: number }) => {
 
 			<div className="scoreDisplay">
 				Счёт противника:
-				<span id="enemyScoreDisplay">
-					{getEnemy(users, id)?.score || 0}
-				</span>
+				<span id="enemyScoreDisplay">{getEnemy(users, id)?.score || 0}</span>
 			</div>
 		</>
 	);
