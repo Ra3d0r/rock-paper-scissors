@@ -1,10 +1,9 @@
-import { useHandleConnection, Users } from './hooks';
-
-const getEnemy = (users: Users, id: number) =>
-	Object.values(users).filter((user) => user.id !== id)[0];
+import { useSelectEnemy } from '../../store/game';
+import { useHandleConnection } from './hooks';
 
 export const Game = () => {
 	const { users, error, disable, onClick, id } = useHandleConnection();
+	const enemy = useSelectEnemy(id);
 
 	if (error) {
 		return <h1>{error}</h1>;
@@ -31,9 +30,9 @@ export const Game = () => {
 			</div>
 
 			<div id="playerDisplay">Ваш ник: {users?.[id]?.username} </div>
-			<div id="enemyDisplay">Противник: {getEnemy(users, id)?.username || ''} </div>
+			<div id="enemyDisplay">Противник: {enemy?.username || ''} </div>
 			<div id="resultDisplay">
-				<p>{getEnemy(users, id) ? '' : 'Ожидайте второго игрока'}</p>
+				<p>{enemy ? '' : 'Ожидайте второго игрока'}</p>
 				<p>{users?.[id]?.text || ''}</p>
 			</div>
 
@@ -44,7 +43,7 @@ export const Game = () => {
 
 			<div className="scoreDisplay">
 				Счёт противника:
-				<span id="enemyScoreDisplay">{getEnemy(users, id)?.score || 0}</span>
+				<span id="enemyScoreDisplay">{enemy?.score || 0}</span>
 			</div>
 		</>
 	);

@@ -7,6 +7,7 @@ export const Home = () => {
 	const [username, setUsername] = useState('');
 	const setWebSocket = useWebSocketStore((state) => state.setWebSocket);
 	const setId = useGameStore((state) => state.setId);
+	const onmessage = useGameStore((state) => state.onMessage);
 	const navigate = useNavigate();
 
 	const onSubmit: FormEventHandler<HTMLFormElement> = (e) => {
@@ -22,6 +23,15 @@ export const Home = () => {
 			};
 			socket.send(JSON.stringify(message));
 		};
+
+		socket.onclose = () => {
+			console.log('Socket закрыт');
+		};
+		socket.onerror = () => {
+			console.log('Socket произошла ошибка');
+		};
+
+		socket.onmessage = (e) => onmessage(e);
 
 		setId(id);
 		setWebSocket(socket);
