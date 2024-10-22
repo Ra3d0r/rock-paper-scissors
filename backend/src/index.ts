@@ -16,7 +16,7 @@ game.on('oneChoice', (chooser) => {
 });
 
 game.on('draw', () => {
-	const users = gamers.draw();
+	const users = gamers.setAllText('Ничья');
 	broadcastMessage({
 		type: 'round',
 		users,
@@ -80,6 +80,16 @@ wss.on('connection', (ws) => {
 	ws.on('close', () => {
 		game.removeGamer(currentId);
 		gamers.removeUser(currentId);
+		gamers.resetAllScore();
+		game.resetAllChoice();
+
+		const users = gamers.setAllText('Противник вышел');
+		broadcastMessage({
+			type: 'game',
+			users,
+		});
+
+		gamers.clearText();
 	});
 });
 

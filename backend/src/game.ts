@@ -59,4 +59,8 @@ export class Game {
 	removeGamer(id: string | number) {
 		delete this.gamers[id];
 	}
+
+	resetAllChoice() {
+		Object.keys(this.gamers).forEach((gamer) => (this.gamers[gamer] = ''));
+	}
 }

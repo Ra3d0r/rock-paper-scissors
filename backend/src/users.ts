@@ -37,8 +37,8 @@ export class Users {
 		return this.users;
 	}
 
-	draw() {
-		Object.keys(this.users).forEach((user) => (this.users[user].text = 'Ничья'));
+	setAllText(text: string) {
+		Object.keys(this.users).forEach((user) => (this.users[user].text = text));
 		return this.users;
 	}
 
@@ -57,5 +57,9 @@ export class Users {
 
 	removeUser(id: string | number) {
 		delete this.users[id];
+	}
+
+	resetAllScore() {
+		Object.keys(this.users).forEach((user) => (this.users[user].score = 0));
 	}
 }
