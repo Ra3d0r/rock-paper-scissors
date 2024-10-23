@@ -1,4 +1,4 @@
-import { useSelectEnemy } from '../../store/game';
+import { useSelectEnemy } from '@/store/game';
 import { useHandleConnection } from './hooks';
 
 export const Game = () => {

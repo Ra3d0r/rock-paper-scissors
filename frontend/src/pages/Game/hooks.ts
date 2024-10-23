@@ -1,5 +1,5 @@
-import { useGameStore } from '../../store/game';
-import { useWebSocketStore } from '../../store/websocket';
+import { useGameStore } from '@/store/game';
+import { useWebSocketStore } from '@/store/websocket';
 
 export const useHandleConnection = () => {
 	const id = useGameStore((state) => state.id);

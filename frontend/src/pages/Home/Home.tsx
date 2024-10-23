@@ -1,8 +1,8 @@
 import { FormEventHandler, useState } from 'react';
-import { useWebSocketStore } from '../../store/websocket';
-import { useGameStore } from '../../store/game';
 import { useNavigate } from 'react-router-dom';
-import { WS_URL } from '../../config';
+import { WS_URL } from '@/config';
+import { useGameStore } from '@/store/game';
+import { useWebSocketStore } from '@/store/websocket';
 
 export const Home = () => {
 	const [username, setUsername] = useState('');
