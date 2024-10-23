@@ -2,6 +2,7 @@ import { FormEventHandler, useState } from 'react';
 import { useWebSocketStore } from '../../store/websocket';
 import { useGameStore } from '../../store/game';
 import { useNavigate } from 'react-router-dom';
+import { WS_URL } from '../../config';
 
 export const Home = () => {
 	const [username, setUsername] = useState('');
@@ -12,7 +13,7 @@ export const Home = () => {
 
 	const onSubmit: FormEventHandler<HTMLFormElement> = (e) => {
 		e.preventDefault();
-		const socket = new WebSocket('ws://localhost:5000');
+		const socket = new WebSocket(WS_URL);
 		const id = Date.now();
 
 		socket.onopen = () => {
