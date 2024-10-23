@@ -1,9 +1,24 @@
-import { useSelectEnemy } from '@/store/game';
-import { useHandleConnection } from './hooks';
+import { useGameStore, useSelectEnemy } from '@/store/game';
+import { useGameActions } from './hooks';
+import { Link } from 'react-router-dom';
 
 export const Game = () => {
-	const { users, error, disable, onClick, id } = useHandleConnection();
+	const { onClick, id } = useGameActions();
+	const disable = useGameStore((state) => state.disable);
+	const error = useGameStore((state) => state.error);
+	const users = useGameStore((state) => state.users);
 	const enemy = useSelectEnemy(id);
+
+	if (!id) {
+		return (
+			<>
+				<h1>Вы не подключены к игре</h1>
+				<Link to="/">
+					<button>Перейти к подключению</button>
+				</Link>
+			</>
+		);
+	}
 
 	if (error) {
 		return <h1>{error}</h1>;
