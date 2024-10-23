@@ -1,11 +1,10 @@
-import { FormEventHandler, useState } from 'react';
+import { FormEventHandler } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { WS_URL } from '@/config';
 import { useGameStore } from '@/store/game';
 import { useWebSocketStore } from '@/store/websocket';
 
 export const Home = () => {
-	const [username, setUsername] = useState('');
 	const setWebSocket = useWebSocketStore((state) => state.setWebSocket);
 	const setId = useGameStore((state) => state.setId);
 	const onmessage = useGameStore((state) => state.onMessage);
@@ -13,6 +12,9 @@ export const Home = () => {
 
 	const onSubmit: FormEventHandler<HTMLFormElement> = (e) => {
 		e.preventDefault();
+		const form = e.target as HTMLFormElement;
+		const username = new FormData(form).get('username');
+
 		const socket = new WebSocket(WS_URL);
 		const id = Date.now();
 
@@ -42,7 +44,7 @@ export const Home = () => {
 	return (
 		<form onSubmit={onSubmit}>
 			<h2>Введите любой ник для подключения к игре и нажмите Enter</h2>
-			<input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
+			<input type="text" name="username" />
 			<button type="submit">Подключиться</button>
 		</form>
 	);
