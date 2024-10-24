@@ -15,9 +15,19 @@ body {
 h1 {
 	font-size: 3.5rem;
 	color: hsl(0, 0%, 20%);
+
+	@media (max-width: 768px) {
+		font-size: 3rem;
+		text-align: center;
+	}
 }
 .choices {
 	margin-bottom: 30px;
+	@media (max-width: 768px) {
+		display: flex;
+		flex-direction: column;
+		gap: 15px;
+	}
 }
 .choices button {
 	font-size: 7.5rem;
@@ -27,6 +37,11 @@ h1 {
 	background-color: hsl(200, 100%, 50%);
 	cursor: pointer;
 	transition: background-color 0.5s ease;
+
+	@media (max-width: 768px) {
+		font-size: 6rem;
+		min-width: 0;
+	}
 }
 .choices button:hover {
 	background-color: hsl(200, 100%, 70%);
@@ -34,6 +49,11 @@ h1 {
 #playerDisplay,
 #enemyDisplay {
 	font-size: 2.5rem;
+	@media (max-width: 768px) {
+		font-size: 1.5rem;
+		text-align: center;
+		padding: 5px;
+	}
 }
 #resultDisplay {
 	display: flex;
@@ -41,6 +61,11 @@ h1 {
 	gap: 10px;
 	font-size: 5rem;
 	margin: 30px 0;
+
+	@media (max-width: 768px) {
+		font-size: 2.5rem;
+		text-align: center;
+	}
 }
 .scoreDisplay {
 	font-size: 2rem;
