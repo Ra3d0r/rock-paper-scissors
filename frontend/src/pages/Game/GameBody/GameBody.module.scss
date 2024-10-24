@@ -1,18 +1,4 @@
-body {
-	font-family: Arial, sans-serif;
-	font-weight: bold;
-	margin: 0;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-}
-#root {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-}
-
-h1 {
+.title {
 	font-size: 3.5rem;
 	color: hsl(0, 0%, 20%);
 
@@ -21,6 +7,7 @@ h1 {
 		text-align: center;
 	}
 }
+
 .choices {
 	margin-bottom: 30px;
 	@media (max-width: 768px) {
@@ -29,6 +16,7 @@ h1 {
 		gap: 15px;
 	}
 }
+
 .choices button {
 	font-size: 7.5rem;
 	min-width: 160px;
@@ -43,11 +31,13 @@ h1 {
 		min-width: 0;
 	}
 }
+
 .choices button:hover {
 	background-color: hsl(200, 100%, 70%);
 }
-#playerDisplay,
-#enemyDisplay {
+
+.playerDisplay,
+.enemyDisplay {
 	font-size: 2.5rem;
 	@media (max-width: 768px) {
 		font-size: 1.5rem;
@@ -55,7 +45,8 @@ h1 {
 		padding: 5px;
 	}
 }
-#resultDisplay {
+
+.resultDisplay {
 	display: flex;
 	flex-direction: column;
 	gap: 10px;
@@ -67,33 +58,17 @@ h1 {
 		text-align: center;
 	}
 }
+
 .scoreDisplay {
 	font-size: 2rem;
 }
+
 .greenText,
-#playerScoreDisplay {
+.playerScoreDisplay {
 	color: hsl(130, 84%, 54%);
 }
+
 .redText,
-#enemyScoreDisplay {
+.enemyScoreDisplay {
 	color: hsl(0, 84%, 60%);
-}
-
-form {
-	padding: 10px;
-	display: flex;
-	flex-direction: column;
-	gap: 10px;
-	justify-content: center;
-}
-
-input[type='text'] {
-	appearance: none;
-	border: none;
-	outline: none;
-	border-bottom: 0.2em solid #e91e63;
-	background: rgba(#e91e63, 0.2);
-	border-radius: 0.2em 0.2em 0 0;
-	padding: 0.4em;
-	color: #e91e63;
 }

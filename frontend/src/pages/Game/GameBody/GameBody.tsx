@@ -1,5 +1,6 @@
 import { useGameStore, useSelectEnemy } from '@/store/game';
 import { useGameActions } from './hooks';
+import styles from './GameBody.module.scss';
 
 export const GameBody = () => {
 	const { onClick, id } = useGameActions();
@@ -9,9 +10,9 @@ export const GameBody = () => {
 
 	return (
 		<>
-			<h1>Rock - Paper - Scissors</h1>
+			<h1 className={styles.title}>Rock - Paper - Scissors</h1>
 
-			<div className="choices">
+			<div className={styles.choices}>
 				<button onClick={() => onClick('камень')} disabled={disable}>
 					👊
 				</button>
@@ -23,21 +24,21 @@ export const GameBody = () => {
 				</button>
 			</div>
 
-			<div id="playerDisplay">Ваш ник: {users?.[id]?.username} </div>
-			<div id="enemyDisplay">Противник: {enemy?.username || ''} </div>
-			<div id="resultDisplay">
+			<div className={styles.playerDisplay}>Ваш ник: {users?.[id]?.username} </div>
+			<div className={styles.enemyDisplay}>Противник: {enemy?.username || ''} </div>
+			<div className={styles.resultDisplay}>
 				<p>{enemy ? '' : 'Ожидайте второго игрока'}</p>
 				<p>{users?.[id]?.text || ''}</p>
 			</div>
 
-			<div className="scoreDisplay">
+			<div className={styles.scoreDisplay}>
 				Ваш счёт:
-				<span id="playerScoreDisplay">{users?.[id]?.score || 0}</span>
+				<span className={styles.playerScoreDisplay}>{users?.[id]?.score || 0}</span>
 			</div>
 
-			<div className="scoreDisplay">
+			<div className={styles.scoreDisplay}>
 				Счёт противника:
-				<span id="enemyScoreDisplay">{enemy?.score || 0}</span>
+				<span className={styles.enemyScoreDisplay}>{enemy?.score || 0}</span>
 			</div>
 		</>
 	);
