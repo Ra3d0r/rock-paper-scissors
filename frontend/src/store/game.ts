@@ -23,13 +23,18 @@ type Actions = {
 	onMessage: (ev: MessageEvent<any>) => void;
 	setDisable: (val: boolean) => void;
 	onError: () => void;
+	resetAll: () => void;
 };
 
-export const useGameStore = create<State & Actions>((set) => ({
+const initState: State = {
 	id: 0,
 	users: {},
 	disable: false,
 	error: '',
+};
+
+export const useGameStore = create<State & Actions>((set) => ({
+	...initState,
 	setId: (id) => set({ id }),
 	setUsers: (users: Users) => set({ users }),
 	setDisable: (disable) => set({ disable }),
@@ -74,6 +79,7 @@ export const useGameStore = create<State & Actions>((set) => ({
 		console.log('Socket произошла ошибка');
 		set({ error: 'Произошла непредвиденная ошибка' });
 	},
+	resetAll: () => set(initState),
 }));
 
 export const useSelectEnemy = (id: string | number) => {

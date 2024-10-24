@@ -9,6 +9,7 @@ export const useFormAction = () => {
 	const setId = useGameStore((state) => state.setId);
 	const onmessage = useGameStore((state) => state.onMessage);
 	const onError = useGameStore((state) => state.onError);
+	const resetAll = useGameStore((state) => state.resetAll);
 	const navigate = useNavigate();
 
 	const onSubmit: FormEventHandler<HTMLFormElement> = (e) => {
@@ -30,6 +31,8 @@ export const useFormAction = () => {
 
 		socket.onclose = () => {
 			console.log('Socket закрыт');
+			resetAll();
+			navigate('/');
 		};
 		socket.onerror = () => onError();
 
