@@ -1,0 +1,18 @@
+services:
+  backend:
+    image: "backend-dev"
+    build: "./backend"
+    volumes:
+      - "./backend/:/app"
+      - "/app/node_modules"
+    ports:
+      - 5000:5000
+  frontend:
+    image: "frontend-dev"
+    build: ./frontend
+    volumes:
+      - "./frontend/src:/app/src"
+    ports:
+      - 5173:5173
+    env_file:
+      - "./frontend/.env"

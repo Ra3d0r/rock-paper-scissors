@@ -1,13 +1,16 @@
-FROM node:16
+FROM node:20.18.0
 
 WORKDIR /app
 
-COPY package.json .
+COPY package.json yarn.lock ./
 
-RUN npm install
+RUN \
+    if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
+    else echo "Lockfile not found." && exit 1; \
+    fi
 
 COPY . .
 
-EXPOSE 3000
+EXPOSE 5173
 
-CMD ["npm", "start"]
+CMD ["yarn", "dev", "--host"]
