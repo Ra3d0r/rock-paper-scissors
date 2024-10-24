@@ -22,6 +22,7 @@ type Actions = {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	onMessage: (ev: MessageEvent<any>) => void;
 	setDisable: (val: boolean) => void;
+	onError: () => void;
 };
 
 export const useGameStore = create<State & Actions>((set) => ({
@@ -68,6 +69,10 @@ export const useGameStore = create<State & Actions>((set) => ({
 			set({ disable: true });
 			return;
 		}
+	},
+	onError: () => {
+		console.log('Socket произошла ошибка');
+		set({ error: 'Произошла непредвиденная ошибка' });
 	},
 }));
 

@@ -8,6 +8,7 @@ export const useFormAction = () => {
 	const setWebSocket = useWebSocketStore((state) => state.setWebSocket);
 	const setId = useGameStore((state) => state.setId);
 	const onmessage = useGameStore((state) => state.onMessage);
+	const onError = useGameStore((state) => state.onError);
 	const navigate = useNavigate();
 
 	const onSubmit: FormEventHandler<HTMLFormElement> = (e) => {
@@ -30,9 +31,7 @@ export const useFormAction = () => {
 		socket.onclose = () => {
 			console.log('Socket закрыт');
 		};
-		socket.onerror = () => {
-			console.log('Socket произошла ошибка');
-		};
+		socket.onerror = () => onError();
 
 		socket.onmessage = (e) => onmessage(e);
 
