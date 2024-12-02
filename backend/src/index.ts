@@ -14,7 +14,10 @@ wss.on('connection', (ws) => {
 			gamers
 				.add({ id: message.id, username: message.username })
 				.catch((reason) => ws.send(sendError(reason)))
-				.then((users) => broadcastMessage({ type: 'connection', users }));
+				.then((users) => {
+					if (!users) return;
+					broadcastMessage({ type: 'connection', users });
+				});
 			return;
 		}
 
@@ -31,6 +34,11 @@ wss.on('connection', (ws) => {
 	ws.on('close', () => {
 		game.removeGamer(currentId);
 		gamers.removeUser(currentId);
+
+		if (gamers.getCountUsers() >= 2) {
+			return;
+		}
+
 		gamers.resetAllScore();
 		game.resetAllChoice();
 

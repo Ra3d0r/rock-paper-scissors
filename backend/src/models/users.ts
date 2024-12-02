@@ -62,4 +62,8 @@ export class Users {
 	resetAllScore() {
 		Object.keys(this.users).forEach((user) => (this.users[user].score = 0));
 	}
+
+	getCountUsers() {
+		return Object.keys(this.users).length;
+	}
 }
