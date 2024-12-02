@@ -31,7 +31,7 @@ export class Users {
 	}
 
 	choice(chooserId: string) {
-		const enemyId = Object.keys(this.users).filter((user) => Number(user) !== Number(chooserId))[0];
+		const enemyId = Object.keys(this.users).find((user) => Number(user) !== Number(chooserId));
 		this.users[enemyId].text = 'Противник сделал ход';
 		this.users[chooserId].text = 'Ожидайте хода противника';
 		return this.users;

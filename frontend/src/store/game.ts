@@ -84,5 +84,5 @@ export const useGameStore = create<State & Actions>((set) => ({
 
 export const useSelectEnemy = (id: string | number) => {
 	const users = useGameStore((state) => state.users);
-	return Object.values(users).filter((user) => user.id !== id)[0];
+	return Object.values(users).find((user) => user.id !== id);
 };

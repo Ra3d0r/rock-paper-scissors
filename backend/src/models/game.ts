@@ -28,7 +28,7 @@ export class Game {
 	}
 
 	private getEnemy(winnerId: string) {
-		return Object.keys(this.gamers).filter((userId) => userId !== winnerId)[0];
+		return Object.keys(this.gamers).find((userId) => userId !== winnerId);
 	}
 
 	run(userId: string | number, choice: string) {
