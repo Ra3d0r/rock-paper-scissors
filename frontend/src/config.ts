@@ -1,1 +1,1 @@
-export const WS_URL = import.meta.env.VITE_WS_SERVER;
+export const WS_URL = `${import.meta.env.VITE_WS_SERVER}:${import.meta.env.VITE_WS_PORT}`;
