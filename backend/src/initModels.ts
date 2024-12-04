@@ -15,8 +15,8 @@ game.on('oneChoice', (chooser) => {
 	gamers.clearText();
 });
 
-game.on('draw', () => {
-	const users = gamers.setAllText('Ничья');
+game.on('draw', (anyUserId, gamersChoices) => {
+	const users = gamers.setAllText(`Ничья, оба выбрали - ${gamersChoices[anyUserId]}`);
 	broadcastMessage({
 		type: 'round',
 		users,
@@ -32,7 +32,9 @@ game.on('loser', (loserId) => {
 	gamers.lose(loserId);
 });
 
-game.on('end', () => {
+game.on('end', (winnerId, choices) => {
+	gamers.end(winnerId, choices);
+
 	const users = gamers.getUsers();
 	broadcastMessage({ type: 'round', users });
 	gamers.clearText();

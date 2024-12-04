@@ -28,7 +28,7 @@ export const GameBody = () => {
 			<div className={styles.enemyDisplay}>Противник: {enemy?.username || ''} </div>
 			<div className={styles.resultDisplay}>
 				{!enemy && <p>Ожидайте второго игрока</p>}
-				<p>{users?.[id]?.text || ''}</p>
+				<p dangerouslySetInnerHTML={{ __html: users?.[id]?.text || '' }} />
 			</div>
 
 			<div className={styles.scoreDisplay}>

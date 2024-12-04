@@ -3,7 +3,7 @@ type gamer = Record<string, string>;
 
 export class Game {
 	private gamers: gamer = {};
-	private events: Partial<Record<event, (gamerId: string) => void>> = {};
+	private events: Partial<Record<event, (gamerId: string, gamersChoices?: gamer) => void>> = {};
 
 	private getWinner(): string | null {
 		const choices = Object.values(this.gamers);
@@ -41,18 +41,18 @@ export class Game {
 
 		const winnerId = this.getWinner();
 		if (!winnerId) {
-			this.events?.draw?.('');
+			this.events?.draw?.(userId as string, this.gamers);
 			this.gamers = {};
 			return;
 		}
 
 		this.events?.winner?.(winnerId);
 		this.events?.loser?.(this.getEnemy(winnerId));
-		this.events?.end?.('');
+		this.events?.end?.(winnerId, this.gamers);
 		this.gamers = {};
 	}
 
-	on(event: event, cb: (gamerId: string) => void) {
+	on(event: event, cb: (gamerId: string, gamersChoices?: gamer) => void) {
 		this.events[event] = cb;
 	}
 

@@ -10,6 +10,10 @@ type UsersType = Record<string, User>;
 export class Users {
 	private users: UsersType = {};
 
+	private getEnemy(id: string) {
+		return Object.keys(this.users).find((userId) => Number(userId) !== Number(id));
+	}
+
 	clearText() {
 		Object.keys(this.users).forEach((user) => (this.users[user].text = ''));
 	}
@@ -31,7 +35,7 @@ export class Users {
 	}
 
 	choice(chooserId: string) {
-		const enemyId = Object.keys(this.users).find((user) => Number(user) !== Number(chooserId));
+		const enemyId = this.getEnemy(chooserId);
 		this.users[enemyId].text = 'Противник сделал ход';
 		this.users[chooserId].text = 'Ожидайте хода противника';
 		return this.users;
@@ -49,6 +53,14 @@ export class Users {
 
 	lose(loserId: string) {
 		this.users[loserId].text = 'Проигрыш';
+	}
+
+	end(winnerId: string, choices: Record<string, string>) {
+		const enemyId = this.getEnemy(winnerId);
+		const winner = this.users[winnerId];
+		const enemy = this.users[enemyId];
+		winner.text += `<br/>${winner.username}: ${choices[winnerId]}, ${enemy.username}: ${choices[enemyId]}`;
+		enemy.text += `<br/>${enemy.username}: ${choices[enemyId]}, ${winner.username}: ${choices[winnerId]}`;
 	}
 
 	getUsers() {
