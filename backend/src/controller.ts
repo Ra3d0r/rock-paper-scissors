@@ -1,4 +1,4 @@
-import { game, gamers } from './main';
+import { game, gamers } from './initModels';
 import { sendError } from './helpers';
 import { Message } from './types';
 import { broadcastMessage, wss } from './server';
