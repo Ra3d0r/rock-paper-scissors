@@ -1,10 +1,15 @@
 import { WebSocket } from 'ws';
+import { ENV } from './config';
+
+const PORT = parseInt(ENV.PORT) || 5000;
+const HOST = ENV.HOST || '127.0.0.1';
 
 export const wss = new WebSocket.Server(
 	{
-		port: 5000,
+		port: PORT,
+		host: HOST,
 	},
-	() => console.log(`Server started on 5000`),
+	() => console.log(`Server started on ${HOST}:${PORT}`),
 );
 
 export function broadcastMessage(message: Record<string, any>) {
