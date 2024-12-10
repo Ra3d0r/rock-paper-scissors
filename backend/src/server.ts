@@ -9,7 +9,7 @@ export const wss = new WebSocket.Server(
 		port: PORT,
 		host: HOST,
 	},
-	() => console.log(`Server started on ${HOST}:${PORT}`),
+	() => console.log(`Server started on ${wss.options.host}:${wss.options.port}`),
 );
 
 export function broadcastMessage(message: Record<string, any>) {
