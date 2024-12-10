@@ -1,3 +1,3 @@
 import { configDotenv } from 'dotenv';
 
-export const ENV = configDotenv({ path: '/.env' }).parsed;
+export const ENV = configDotenv().parsed;
