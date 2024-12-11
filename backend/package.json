@@ -4,7 +4,8 @@
   "main": "src/controller.js",
   "scripts": {
     "dev": "nodemon src/controller.ts",
-    "build": "tsc && nodemon dist/controller.js"
+    "build": "tsc",
+    "serve": "node dist/controller.js"
   },
   "keywords": [],
   "author": "",

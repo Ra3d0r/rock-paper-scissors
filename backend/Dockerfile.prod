@@ -1,4 +1,4 @@
-FROM node:20.18.0
+FROM node:20.18.0 AS builder
 
 WORKDIR /app
 
@@ -11,4 +11,11 @@ RUN \
 
 COPY . .
 
-CMD ["yarn", "build"]
+RUN yarn build
+
+
+FROM node:20-alpine
+
+COPY --from=builder /app .
+
+CMD ["npm", "run", "serve"]
