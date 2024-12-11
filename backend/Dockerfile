@@ -11,6 +11,4 @@ RUN \
 
 COPY . .
 
-EXPOSE 5000
-
 CMD ["yarn", "dev"]
