@@ -9,6 +9,7 @@ services:
       - 5000:5000
     env_file:
       - "./backend/.env"
+    restart: on-failure
   frontend:
     image: "frontend-dev"
     build: ./frontend
@@ -20,3 +21,4 @@ services:
       - "./frontend/.env"
     depends_on:
       - backend
+    restart: on-failure 
