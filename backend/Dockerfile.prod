@@ -17,5 +17,3 @@ RUN yarn build
 FROM node:20-alpine
 
 COPY --from=builder /app .
-
-CMD ["npm", "run", "serve"]

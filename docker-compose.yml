@@ -10,6 +10,7 @@ services:
     env_file:
       - "./backend/.env"
     restart: on-failure
+    command: ["yarn", "dev"]
   frontend:
     image: "frontend-dev"
     build: ./frontend
@@ -21,4 +22,5 @@ services:
       - "./frontend/.env"
     depends_on:
       - backend
-    restart: on-failure 
+    restart: on-failure
+    command: ["yarn", "dev"]

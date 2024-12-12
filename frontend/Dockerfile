@@ -10,5 +10,3 @@ RUN \
     fi
 
 COPY . .
-
-CMD ["yarn", "dev", "--host"]
