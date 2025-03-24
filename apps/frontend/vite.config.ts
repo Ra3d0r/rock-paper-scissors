@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 
 // https://vitejs.dev/config/
+// @ts-ignore
 export default defineConfig(({ mode }) => {
 	const env = loadEnv(mode, process.cwd());
 	const PORT = Number(env.VITE_PORT || 5173);

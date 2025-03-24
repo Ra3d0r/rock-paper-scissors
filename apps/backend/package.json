@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "nodemon src/controller.ts",
     "build": "tsc",
-    "serve": "node dist/controller.js"
+    "start": "node dist/controller.js"
   },
   "keywords": [],
   "author": "",
