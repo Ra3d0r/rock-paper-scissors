@@ -1,25 +1,25 @@
 services:
   backend:
     image: "backend-dev"
-    build: "./backend"
+    build: "./apps/backend"
     volumes:
-      - "./backend/:/app"
+      - "./apps/backend/:/app"
       - "/app/node_modules"
     ports:
-      - 5000:5000
+      - 5005:5005
     env_file:
-      - "./backend/.env"
+      - "./.env.back"
     restart: on-failure
     command: ["yarn", "dev"]
   frontend:
     image: "frontend-dev"
-    build: ./frontend
+    build: ./apps/frontend
     volumes:
-      - "./frontend/src:/app/src"
+      - "./apps/frontend/src:/app/src"
     ports:
       - 5173:5173
     env_file:
-      - "./frontend/.env"
+      - "./.env.front"
     depends_on:
       - backend
     restart: on-failure
