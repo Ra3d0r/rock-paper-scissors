@@ -7,7 +7,8 @@
     "build": "tsc",
     "start": "node dist/controller.js",
     "check-types": "tsc --noEmit",
-    "lint": "eslint . --ext .ts"
+    "lint": "eslint . --ext .ts",
+    "format": "prettier --write \"**/*.{ts,md,js}\""
   },
   "keywords": [],
   "author": "",

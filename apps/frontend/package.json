@@ -8,7 +8,8 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "check-types": "tsc --noEmit",
-    "start": "vite preview --host"
+    "start": "vite preview --host",
+    "format": "prettier --write \"**/*.{ts,tsx,md,js}\""
   },
   "dependencies": {
     "react": "^18.3.1",
