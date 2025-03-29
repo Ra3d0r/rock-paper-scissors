@@ -7,7 +7,9 @@
     "dev": "vite --host",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview --host"
+    "check-types": "tsc --noEmit",
+    "start": "vite preview --host",
+    "format": "prettier --write \"**/*.{ts,tsx,md,js}\""
   },
   "dependencies": {
     "react": "^18.3.1",

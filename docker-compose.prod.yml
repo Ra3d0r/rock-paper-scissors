@@ -2,23 +2,23 @@ services:
   backend:
     image: "backend-prod"
     build:
-      context: "./backend"
+      context: "./apps/backend"
       dockerfile: "Dockerfile.prod"
     ports:
-      - 5000:5000
+      - 5005:5005
     env_file:
-      - "./backend/.env"
+      - "./.env.back"
     restart: on-failure
-    command: ["npm", "run", "serve"]
+    command: ["npm", "run", "start"]
   frontend:
     image: "frontend-prod"
     build: 
-      context: './frontend'
+      context: './apps/frontend'
       dockerfile: "Dockerfile.prod"
     ports:
       - 80:80
     env_file:
-      - "./frontend/.env"
+      - "./.env.front"
     depends_on:
       - backend
     restart: on-failure

@@ -1,19 +1,26 @@
 {
-  "name": "game",
-  "version": "1.0.0",
-  "description": "- Node v20.18.0 - yarn v1.22.22",
-  "main": "index.js",
+  "name": "my-turborepo",
+  "private": true,
   "scripts": {
-    "dev": "concurrently \"yarn --cwd frontend dev\" \"yarn --cwd backend dev\"",
-    "build": "concurrently \"yarn --cwd frontend build\" \"yarn --cwd backend build\"",
-    "start": "concurrently \"yarn --cwd frontend preview\" \"yarn --cwd backend serve\"",
-    "serve": "yarn build && yarn start",
-    "installAll": "yarn install && yarn --cwd frontend install && yarn --cwd backend install"
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "format": "turbo run format",
+    "check-types": "turbo run check-types",
+    "start": "turbo run start",
+    "preview": "turbo run build && turbo run start"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
-    "concurrently": "^9.1.0"
-  }
+    "prettier": "^3.5.0",
+    "turbo": "^2.4.2",
+    "typescript": "5.7.3"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "packageManager": "yarn@1.22.22",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ]
 }

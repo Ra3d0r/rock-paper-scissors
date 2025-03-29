@@ -5,7 +5,10 @@
   "scripts": {
     "dev": "nodemon src/controller.ts",
     "build": "tsc",
-    "serve": "node dist/controller.js"
+    "start": "node dist/controller.js",
+    "check-types": "tsc --noEmit",
+    "lint": "eslint . --ext .ts",
+    "format": "prettier --write \"**/*.{ts,md,js}\""
   },
   "keywords": [],
   "author": "",
@@ -16,10 +19,14 @@
     "ws": "^8.18.0"
   },
   "devDependencies": {
+    "@eslint/js": "^9.11.1",
     "@types/ws": "^8.5.12",
+    "@typescript-eslint/parser": "^8.28.0",
+    "eslint": "^9.11.1",
     "nodemon": "^3.1.7",
     "prettier": "^3.3.3",
     "ts-node": "^10.9.2",
-    "typescript": "^5.6.3"
+    "typescript": "^5.6.3",
+    "typescript-eslint": "^8.7.0"
   }
 }

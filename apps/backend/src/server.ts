@@ -10,7 +10,7 @@ export const wss = new WebSocket.Server(
 	() => console.log(`Server started on ${wss.options.port}`),
 );
 
-export function broadcastMessage(message: Record<string, any>) {
+export function broadcastMessage(message: Record<string, unknown>) {
 	wss.clients.forEach((client) => {
 		client.send(JSON.stringify(message));
 	});
