@@ -14,6 +14,10 @@ RUN turbo prune --scope=${APP} --docker
 FROM base AS installer
 WORKDIR /app
 ARG APP
+ARG WS_PORT
+
+# Экспортируем переменные для build
+ENV WS_PORT=${WS_PORT}
 
 COPY --from=pruner /app/out/json/ .
 COPY --from=pruner /app/out/yarn.lock ./yarn.lock
@@ -32,7 +36,10 @@ RUN turbo run build --filter=${APP}^...
 FROM base AS runner
 WORKDIR /app
 ARG APP
+ARG WS_PORT
+
 ENV APP_NAME=${APP}
+ENV WS_PORT=${WS_PORT}
 
 COPY --from=installer /app .
 

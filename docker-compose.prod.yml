@@ -7,10 +7,11 @@ services:
             target: backend-runner
             args:
                 APP: backend
-        ports:
-            - 5005:5005
-        env_file:
-            - './.env.back'
+                WS_PORT: ${WS_PORT}
+        expose:
+            - ${WS_PORT}
+        environment:
+            - WS_PORT=${WS_PORT}
         restart: unless-stopped
 
     frontend:
@@ -21,6 +22,7 @@ services:
             target: frontend-runner
             args:
                 APP: frontend
+                WS_PORT: ${WS_PORT}
         ports:
             - 80:80
         depends_on:
