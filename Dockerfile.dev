@@ -1,0 +1,40 @@
+# syntax=docker/dockerfile:1.4
+FROM node:20.18.0 AS base
+
+RUN npm install -g turbo
+
+#############################################
+FROM base AS pruner
+WORKDIR /app
+ARG APP
+COPY . .
+RUN turbo prune --scope=${APP} --docker
+
+#############################################
+FROM base AS installer
+WORKDIR /app
+ARG APP
+
+COPY --from=pruner /app/out/json/ .
+COPY --from=pruner /app/out/yarn.lock ./yarn.lock
+COPY ./apps/${APP}/package.json ./apps/${APP}/package.json
+
+RUN --mount=type=cache,target=/usr/local/share/.cache/yarn/v6 \
+    yarn install --frozen-lockfile
+
+COPY --from=pruner /app/out/full/ .
+COPY turbo.json turbo.json
+
+# Собираем только зависимости (^...) - не само приложение
+RUN turbo run build --filter=${APP}^...
+
+#############################################
+FROM base AS runner
+WORKDIR /app
+ARG APP
+ENV APP_NAME=${APP}
+
+COPY --from=installer /app .
+
+CMD sh -c "yarn workspace ${APP_NAME} dev"
+

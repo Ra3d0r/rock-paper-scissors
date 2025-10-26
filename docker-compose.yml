@@ -1,26 +1,34 @@
 services:
-  backend:
-    image: "backend-dev"
-    build: "./apps/backend"
-    volumes:
-      - "./apps/backend/:/app"
-      - "/app/node_modules"
-    ports:
-      - 5005:5005
-    env_file:
-      - "./.env.back"
-    restart: on-failure
-    command: ["yarn", "dev"]
-  frontend:
-    image: "frontend-dev"
-    build: ./apps/frontend
-    volumes:
-      - "./apps/frontend/src:/app/src"
-    ports:
-      - 5173:5173
-    env_file:
-      - "./.env.front"
-    depends_on:
-      - backend
-    restart: on-failure
-    command: ["yarn", "dev"]
+    backend:
+        image: 'backend-dev'
+        build:
+            context: .
+            dockerfile: ./Dockerfile.dev
+            args:
+                APP: backend
+        volumes:
+            - './apps/backend/src:/app/apps/backend/src'
+            - '/app/node_modules'
+        ports:
+            - 5005:5005
+        env_file:
+            - './.env.back'
+        restart: on-failure
+
+    frontend:
+        image: 'frontend-dev'
+        build:
+            context: .
+            dockerfile: ./Dockerfile.dev
+            args:
+                APP: frontend
+        volumes:
+            - './apps/frontend/src:/app/apps/frontend/src'
+            - '/app/node_modules'
+        ports:
+            - 5173:5173
+        env_file:
+            - './.env.front'
+        depends_on:
+            - backend
+        restart: on-failure
