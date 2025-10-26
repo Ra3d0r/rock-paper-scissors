@@ -1,7 +1,7 @@
 import { WebSocket } from 'ws';
 import { ENV } from './config';
 
-const PORT = parseInt(ENV.PORT) || 5000;
+const PORT = parseInt(ENV.WS_PORT) || 5000;
 
 export const wss = new WebSocket.Server(
 	{
