@@ -25,5 +25,8 @@ export default defineConfig(({ mode }) => {
 				},
 			},
 		},
+		preview: {
+			port: VITE_SERVER_PORT,
+		},
 	};
 });

@@ -2,16 +2,16 @@
 	"name": "my-turborepo",
 	"private": true,
 	"scripts": {
-		"build": "cross-env VITE_PORT=5173 BACKEND_PORT=5005 turbo run build",
-		"dev": "cross-env VITE_PORT=5173 BACKEND_PORT=5005 turbo run dev",
+		"build": "dotenv -- turbo run build",
+		"dev": "dotenv -- turbo run dev",
 		"lint": "turbo run lint",
 		"format": "turbo run format",
 		"check-types": "turbo run check-types",
-		"start": "cross-env VITE_PORT=5173 BACKEND_PORT=5005 turbo run start",
-		"preview": "cross-env VITE_PORT=5173 BACKEND_PORT=5005 turbo run build && cross-env VITE_PORT=5173 BACKEND_PORT=5005 turbo run start"
+		"start": "dotenv -- turbo run start",
+		"preview": "dotenv -- turbo run build && dotenv -- turbo run start"
 	},
 	"devDependencies": {
-		"cross-env": "^10.1.0",
+		"dotenv-cli": "^10.0.0",
 		"prettier": "^3.5.0",
 		"turbo": "^2.4.2",
 		"typescript": "5.7.3"
