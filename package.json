@@ -2,13 +2,13 @@
 	"name": "my-turborepo",
 	"private": true,
 	"scripts": {
-		"build": "cross-env VITE_PORT=5173 WS_PORT=5005 turbo run build",
-		"dev": "cross-env VITE_PORT=5173 WS_PORT=5005 turbo run dev",
+		"build": "cross-env VITE_PORT=5173 BACKEND_PORT=5005 turbo run build",
+		"dev": "cross-env VITE_PORT=5173 BACKEND_PORT=5005 turbo run dev",
 		"lint": "turbo run lint",
 		"format": "turbo run format",
 		"check-types": "turbo run check-types",
-		"start": "turbo run start",
-		"preview": "turbo run build && turbo run start"
+		"start": "cross-env VITE_PORT=5173 BACKEND_PORT=5005 turbo run start",
+		"preview": "cross-env VITE_PORT=5173 BACKEND_PORT=5005 turbo run build && cross-env VITE_PORT=5173 BACKEND_PORT=5005 turbo run start"
 	},
 	"devDependencies": {
 		"cross-env": "^10.1.0",

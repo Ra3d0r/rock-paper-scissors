@@ -6,14 +6,14 @@ services:
             dockerfile: ./Dockerfile.dev
             args:
                 APP: backend
-                WS_PORT: ${WS_PORT}
+                BACKEND_PORT: ${BACKEND_PORT}
         volumes:
             - './apps/backend/src:/app/apps/backend/src'
             - '/app/node_modules'
         ports:
-            - ${WS_PORT}:${WS_PORT}
+            - ${BACKEND_PORT}:${BACKEND_PORT}
         environment:
-            - WS_PORT=${WS_PORT}
+            - BACKEND_PORT=${BACKEND_PORT}
         restart: on-failure
 
     frontend:
@@ -23,14 +23,16 @@ services:
             dockerfile: ./Dockerfile.dev
             args:
                 APP: frontend
-                WS_PORT: ${WS_PORT}
+                BACKEND_PORT: ${BACKEND_PORT}
+                VITE_PORT: ${VITE_PORT}
         volumes:
             - './apps/frontend/src:/app/apps/frontend/src'
             - '/app/node_modules'
         ports:
             - ${VITE_PORT}:${VITE_PORT}
         environment:
-            - WS_PORT=${WS_PORT}
+            - BACKEND_HOST=backend
+            - BACKEND_PORT=${BACKEND_PORT}
             - VITE_PORT=${VITE_PORT}
         depends_on:
             - backend

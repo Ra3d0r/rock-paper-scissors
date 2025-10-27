@@ -14,10 +14,12 @@ RUN turbo prune --scope=${APP} --docker
 FROM base AS installer
 WORKDIR /app
 ARG APP
-ARG WS_PORT
+ARG BACKEND_HOST
+ARG BACKEND_PORT
 
 # Экспортируем переменные для build
-ENV WS_PORT=${WS_PORT}
+ENV BACKEND_HOST=${BACKEND_HOST}
+ENV BACKEND_PORT=${BACKEND_PORT}
 
 COPY --from=pruner /app/out/json/ .
 COPY --from=pruner /app/out/yarn.lock ./yarn.lock
@@ -36,10 +38,14 @@ RUN turbo run build --filter=${APP}^...
 FROM base AS runner
 WORKDIR /app
 ARG APP
-ARG WS_PORT
+ARG BACKEND_HOST
+ARG BACKEND_PORT
+ARG VITE_PORT
 
 ENV APP_NAME=${APP}
-ENV WS_PORT=${WS_PORT}
+ENV BACKEND_HOST=${BACKEND_HOST}
+ENV BACKEND_PORT=${BACKEND_PORT}
+ENV VITE_PORT=${VITE_PORT}
 
 COPY --from=installer /app .
 

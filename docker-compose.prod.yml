@@ -7,11 +7,11 @@ services:
             target: backend-runner
             args:
                 APP: backend
-                WS_PORT: ${WS_PORT}
+                BACKEND_PORT: ${BACKEND_PORT}
         expose:
-            - ${WS_PORT}
+            - ${BACKEND_PORT}
         environment:
-            - WS_PORT=${WS_PORT}
+            - BACKEND_PORT=${BACKEND_PORT}
         restart: unless-stopped
 
     frontend:
@@ -22,9 +22,12 @@ services:
             target: frontend-runner
             args:
                 APP: frontend
-                WS_PORT: ${WS_PORT}
+                BACKEND_PORT: ${BACKEND_PORT}
         ports:
             - 80:80
+        environment:
+            - BACKEND_PORT=${BACKEND_PORT}
+            - BACKEND_HOST=backend
         depends_on:
             - backend
         restart: unless-stopped

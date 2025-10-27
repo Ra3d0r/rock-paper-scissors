@@ -1,3 +1,3 @@
 export const ENV = {
-	WS_PORT: process.env.WS_PORT,
+	BACKEND_PORT: process.env.BACKEND_PORT,
 };

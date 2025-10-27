@@ -1,6 +1,5 @@
 {
 	"$schema": "https://turbo.build/schema.json",
-	"ui": "tui",
 	"tasks": {
 		"build": {
 			"dependsOn": ["^build"],
@@ -24,5 +23,5 @@
 			"dependsOn": ["^format"]
 		}
 	},
-	"globalEnv": ["VITE_PORT", "WS_PORT"]
+	"globalEnv": ["VITE_PORT", "BACKEND_PORT"]
 }

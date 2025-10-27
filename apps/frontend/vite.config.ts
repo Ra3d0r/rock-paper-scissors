@@ -5,7 +5,9 @@ import path from 'path';
 // https://vitejs.dev/config/
 // @ts-ignore
 export default defineConfig(({ mode }) => {
-	const PORT = Number(process.env.VITE_PORT || 5173);
+	const VITE_SERVER_PORT = Number(process.env.VITE_PORT || 5173);
+	const BACKEND_HOST = process.env.BACKEND_HOST || 'localhost';
+	const BACKEND_PORT = process.env.BACKEND_PORT;
 
 	return {
 		plugins: [react()],
@@ -15,10 +17,13 @@ export default defineConfig(({ mode }) => {
 			},
 		},
 		server: {
-			port: PORT,
-		},
-		define: {
-			'import.meta.env.WS_PORT': JSON.stringify(process.env.WS_PORT),
+			port: VITE_SERVER_PORT,
+			proxy: {
+				'/ws': {
+					target: `ws://${BACKEND_HOST}:${BACKEND_PORT}`,
+					ws: true,
+				},
+			},
 		},
 	};
 });
