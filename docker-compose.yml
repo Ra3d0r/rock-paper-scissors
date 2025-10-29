@@ -1,26 +1,39 @@
 services:
-  backend:
-    image: "backend-dev"
-    build: "./apps/backend"
-    volumes:
-      - "./apps/backend/:/app"
-      - "/app/node_modules"
-    ports:
-      - 5005:5005
-    env_file:
-      - "./.env.back"
-    restart: on-failure
-    command: ["yarn", "dev"]
-  frontend:
-    image: "frontend-dev"
-    build: ./apps/frontend
-    volumes:
-      - "./apps/frontend/src:/app/src"
-    ports:
-      - 5173:5173
-    env_file:
-      - "./.env.front"
-    depends_on:
-      - backend
-    restart: on-failure
-    command: ["yarn", "dev"]
+    backend:
+        image: 'backend-dev'
+        build:
+            context: .
+            dockerfile: ./Dockerfile.dev
+            args:
+                APP: backend
+                BACKEND_PORT: ${BACKEND_PORT}
+        volumes:
+            - './apps/backend/src:/app/apps/backend/src'
+            - '/app/node_modules'
+        ports:
+            - ${BACKEND_PORT}:${BACKEND_PORT}
+        environment:
+            - BACKEND_PORT=${BACKEND_PORT}
+        restart: on-failure
+
+    frontend:
+        image: 'frontend-dev'
+        build:
+            context: .
+            dockerfile: ./Dockerfile.dev
+            args:
+                APP: frontend
+                BACKEND_PORT: ${BACKEND_PORT}
+                VITE_PORT: ${VITE_PORT}
+        volumes:
+            - './apps/frontend/src:/app/apps/frontend/src'
+            - '/app/node_modules'
+        ports:
+            - ${VITE_PORT}:${VITE_PORT}
+        environment:
+            - BACKEND_HOST=backend
+            - BACKEND_PORT=${BACKEND_PORT}
+            - VITE_PORT=${VITE_PORT}
+        depends_on:
+            - backend
+        restart: on-failure

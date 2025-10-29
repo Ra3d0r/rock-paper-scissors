@@ -1,25 +1,33 @@
 services:
-  backend:
-    image: "backend-prod"
-    build:
-      context: "./apps/backend"
-      dockerfile: "Dockerfile.prod"
-    ports:
-      - 5005:5005
-    env_file:
-      - "./.env.back"
-    restart: on-failure
-    command: ["npm", "run", "start"]
-  frontend:
-    image: "frontend-prod"
-    build: 
-      context: './apps/frontend'
-      dockerfile: "Dockerfile.prod"
-    ports:
-      - 80:80
-    env_file:
-      - "./.env.front"
-    depends_on:
-      - backend
-    restart: on-failure
-    command: ["nginx", "-g", "daemon off;"]
+    backend:
+        image: 'backend-prod'
+        build:
+            context: .
+            dockerfile: ./Dockerfile.prod
+            target: backend-runner
+            args:
+                APP: backend
+                BACKEND_PORT: ${BACKEND_PORT}
+        expose:
+            - ${BACKEND_PORT}
+        environment:
+            - BACKEND_PORT=${BACKEND_PORT}
+        restart: unless-stopped
+
+    frontend:
+        image: 'frontend-prod'
+        build:
+            context: .
+            dockerfile: ./Dockerfile.prod
+            target: frontend-runner
+            args:
+                APP: frontend
+                BACKEND_PORT: ${BACKEND_PORT}
+        ports:
+            - 80:80
+        environment:
+            - BACKEND_PORT=${BACKEND_PORT}
+            - BACKEND_HOST=backend
+        depends_on:
+            - backend
+        restart: unless-stopped

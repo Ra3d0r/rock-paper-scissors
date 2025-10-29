@@ -1,11 +1,12 @@
 import { WebSocket } from 'ws';
 import { ENV } from './config';
 
-const PORT = parseInt(ENV.PORT) || 5000;
+const PORT = parseInt(ENV.BACKEND_PORT);
 
 export const wss = new WebSocket.Server(
 	{
 		port: PORT,
+		path: '/ws',
 	},
 	() => console.log(`Server started on ${wss.options.port}`),
 );

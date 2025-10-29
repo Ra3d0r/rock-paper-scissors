@@ -1,26 +1,26 @@
 {
-  "name": "my-turborepo",
-  "private": true,
-  "scripts": {
-    "build": "turbo run build",
-    "dev": "turbo run dev",
-    "lint": "turbo run lint",
-    "format": "turbo run format",
-    "check-types": "turbo run check-types",
-    "start": "turbo run start",
-    "preview": "turbo run build && turbo run start"
-  },
-  "devDependencies": {
-    "prettier": "^3.5.0",
-    "turbo": "^2.4.2",
-    "typescript": "5.7.3"
-  },
-  "engines": {
-    "node": ">=18"
-  },
-  "packageManager": "yarn@1.22.22",
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ]
+	"name": "my-turborepo",
+	"private": true,
+	"scripts": {
+		"build": "dotenv -- turbo run build",
+		"dev": "dotenv -- turbo run dev",
+		"lint": "turbo run lint",
+		"format": "turbo run format",
+		"check-types": "turbo run check-types",
+		"start": "dotenv -- turbo run start",
+		"preview": "dotenv -- turbo run build && dotenv -- turbo run start"
+	},
+	"devDependencies": {
+		"dotenv-cli": "^10.0.0",
+		"prettier": "^3.5.0",
+		"turbo": "^2.4.2",
+		"typescript": "5.7.3"
+	},
+	"engines": {
+		"node": ">=18"
+	},
+	"packageManager": "yarn@1.22.22",
+	"workspaces": [
+		"apps/*"
+	]
 }

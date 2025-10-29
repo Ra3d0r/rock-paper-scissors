@@ -1,0 +1,16 @@
+node_modules
+npm-debug.log
+.git
+.gitignore
+README.md
+env.example
+.vscode
+.idea
+dist
+.turbo
+.DS_Store
+*.log
+apps/*/node_modules
+apps/*/dist
+apps/*/.turbo
+
